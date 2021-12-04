@@ -1,31 +1,29 @@
 <template>
 	<div class="content">
-		<form>
-			<div class="mb-3">
-				<label for="exampleInputEmail1" class="form-label">Email address</label>
-				<ValidInput :rules="emialRules" v-model="emailRef" />
-				{{ emailRef }}
+		<ValidForm @form-submit="formSubmit">
+			<div>
+				<div class="mb-3">
+					<label for="exampleInputEmail1" class="form-label"
+						>Email address</label
+					>
+					<ValidInput :rules="emialRules" v-model="email" type="text" />
+				</div>
+				<div class="mb-3">
+					<label for="exampleInputPassword1" class="form-label">Password</label>
+					<ValidInput :rules="passwordRules" v-model="password" type="text" />
+				</div>
 			</div>
-			<div class="mb-3">
-				<label for="exampleInputPassword1" class="form-label">Password</label>
-				<input
-					type="password"
-					class="form-control"
-					id="exampleInputPassword1"
-				/>
-			</div>
-			<div class="mb-3 form-check">
-				<input type="checkbox" class="form-check-input" id="exampleCheck1" />
-				<label class="form-check-label" for="exampleCheck1">Check me out</label>
-			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
+			<template #submit
+				><button type="submit" class="btn btn-primary">Submit</button></template
+			>
+		</ValidForm>
 	</div>
 </template>
 <script lang="ts" setup>
 import { ValidRuleProp } from "@/components/form/ValidInput.vue";
 import { ref } from "@vue/reactivity";
 import ValidInput from "../../components/form/ValidInput.vue";
+import ValidForm from "@/components/form/ValidForm.vue";
 
 const emialRules: ValidRuleProp = [
 	{
@@ -37,8 +35,15 @@ const emialRules: ValidRuleProp = [
 		message: "不是个有效的邮箱地址",
 	},
 ];
+const passwordRules: ValidRuleProp = [
+	{ type: "required", message: "该字段必填" },
+];
 
-const emailRef = ref("he");
+const email = ref();
+const password = ref();
+const formSubmit = (val: boolean) => {
+	console.log(val);
+};
 </script>
 <style scoped>
 .content {

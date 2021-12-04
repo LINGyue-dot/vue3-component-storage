@@ -1,6 +1,5 @@
 <template>
 	<input
-		type="text"
 		class="form-control"
 		:class="{ 'is-invalid': inputRef.error }"
 		id="validationServer05"
@@ -8,6 +7,7 @@
 		v-model="inputRef.val"
 		@blur="validInput"
 		@change="valueChange"
+		v-bind="$attrs"
 	/>
 	<div
 		v-if="inputRef.error"
@@ -17,8 +17,14 @@
 		{{ inputRef.message }}
 	</div>
 </template>
+<script lang="ts">
+export default {
+	inheritAttrs: false,
+};
+</script>
 <script lang="ts" setup>
-import { PropType, reactive, defineExpose, defineEmits } from "vue";
+import { mitter } from "./ValidForm.vue";
+import { PropType, reactive, onMounted, defineEmits } from "vue";
 interface InputRuleProp {
 	type: "required" | "email";
 	message: string;
@@ -52,7 +58,7 @@ const validInput = () => {
 			inputRef.message = rule.message;
 			switch (rule.type) {
 				case "required":
-					passed = inputRef.val?.trim() !== "";
+					passed = !!inputRef.val ? inputRef.val?.trim() !== "" : false;
 					break;
 				case "email":
 					passed = !!inputRef.val?.includes("a");
@@ -62,11 +68,14 @@ const validInput = () => {
 			return passed;
 		});
 		inputRef.error = !allPassed;
+		return allPassed;
 	}
+	return true;
 };
 
-defineExpose({
-	validInput,
+//  组件创建时候将验证函数传递给父组件
+onMounted(() => {
+	mitter.emit("form-item-created", validInput);
 });
 </script>
 <style scoped></style>

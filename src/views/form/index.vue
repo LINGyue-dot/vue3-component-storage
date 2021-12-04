@@ -3,7 +3,8 @@
 		<form>
 			<div class="mb-3">
 				<label for="exampleInputEmail1" class="form-label">Email address</label>
-				<ValidInput :rules="emialRules" />
+				<ValidInput :rules="emialRules" v-model="emailRef" />
+				{{ emailRef }}
 			</div>
 			<div class="mb-3">
 				<label for="exampleInputPassword1" class="form-label">Password</label>
@@ -23,6 +24,7 @@
 </template>
 <script lang="ts" setup>
 import { ValidRuleProp } from "@/components/form/ValidInput.vue";
+import { ref } from "@vue/reactivity";
 import ValidInput from "../../components/form/ValidInput.vue";
 
 const emialRules: ValidRuleProp = [
@@ -35,6 +37,8 @@ const emialRules: ValidRuleProp = [
 		message: "不是个有效的邮箱地址",
 	},
 ];
+
+const emailRef = ref("he");
 </script>
 <style scoped>
 .content {

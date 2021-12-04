@@ -1,11 +1,13 @@
 <template>
 	<input
 		type="text"
-		class="form-control is-invalid"
+		class="form-control"
+		:class="{ 'is-invalid': inputRef.error }"
 		id="validationServer05"
 		aria-describedby="validationServer05Feedback"
 		v-model="inputRef.val"
 		@blur="validInput"
+		@change="valueChange"
 	/>
 	<div
 		v-if="inputRef.error"
@@ -16,22 +18,31 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { PropType, reactive, defineExpose } from "vue";
+import { PropType, reactive, defineExpose, defineEmits } from "vue";
 interface InputRuleProp {
 	type: "required" | "email";
 	message: string;
 }
 export type ValidRuleProp = InputRuleProp[];
 
+const props = defineProps({
+	rules: Object as PropType<ValidRuleProp>,
+	modelValue: String, // 双向绑定
+});
+
+const emits = defineEmits(["update:modelValue"]);
+
 const inputRef = reactive({
-	val: "",
+	val: props.modelValue,
 	error: false,
 	message: "",
 });
 
-const props = defineProps({
-	rules: Object as PropType<ValidRuleProp>,
-});
+const valueChange = (e: Event) => {
+	const target = (e.target as HTMLInputElement).value;
+	inputRef.val = target;
+	emits("update:modelValue", target);
+};
 
 // 验证函数
 const validInput = () => {
@@ -41,10 +52,10 @@ const validInput = () => {
 			inputRef.message = rule.message;
 			switch (rule.type) {
 				case "required":
-					passed = inputRef.val.trim() !== "";
+					passed = inputRef.val?.trim() !== "";
 					break;
 				case "email":
-					passed = inputRef.val.includes("a");
+					passed = !!inputRef.val?.includes("a");
 				default:
 					break;
 			}

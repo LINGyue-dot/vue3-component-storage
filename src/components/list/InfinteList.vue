@@ -7,12 +7,12 @@
 		<div class="infinite-list" :style="{ transform: getTransform }">
 			<div
 				:ref="setItemRef"
+				ref="tempItem"
 				class="infinite-list-item"
 				v-for="item in visibleData"
 				:key="item.id"
 				:style="{
-					height: positions[item.id].height + 'px',
-					// lineHeight: positions[item.id].height + 'px',
+					// height: positions[item.id].height + 'px',
 				}"
 			>
 				{{ item.value }}
@@ -43,7 +43,8 @@ const props = defineProps({
 });
 
 const listRef = ref<HTMLDivElement>();
-const itemRefs = ref<HTMLDivElement[]>();
+const itemRefs = ref<HTMLDivElement[]>([]);
+const tempItem = ref<HTMLDivElement>();
 // refs array
 const setItemRef = (el: HTMLDivElement) => {
 	itemRefs.value?.push(el);
@@ -75,14 +76,12 @@ const visibleData = computed(() =>
 );
 
 const scrollEvent = (e: Event) => {
-	console.log("scroll");
 	// 当前滚动位置
 	let scrollTop = listRef.value?.scrollTop as number;
 	// 开始索引
 	start.value = getStartIndex(scrollTop);
 	// 结束索引
 	end.value = getStartIndex(scrollTop + screenHeight.value);
-	console.log(start.value, end.value);
 	// 计算偏移量
 	if (start.value >= 1) {
 		// 上一个 bottom
@@ -122,12 +121,36 @@ onMounted(() => {
 
 // 更新 DOM 之后记录下真实的 DOM 位置
 onUpdated(() => {
+	console.log("updated");
 	let nodes = itemRefs.value;
-	console.log(nodes);
+	// console.log(nodes);
+	// return;
+	const node = tempItem.value as HTMLDivElement;
+
+	let rect = node.getBoundingClientRect();
+	let height = rect.height;
+	console.log(node);
+	let index = +node.id.slice(1);
+	let oldHeight = positions.value[index].height;
+	let dValue = oldHeight - height;
+
+	// 如果存在差值
+	if (dValue) {
+		// 修正差值
+		positions.value[index].bottom = positions.value[index].bottom - dValue;
+		positions.value[index].height = height;
+
+		// 修正下面的 DOM 的位置
+		for (let k = index + 1; k < positions.value.length; k++) {
+			positions.value[k].top = positions.value[k - 1].bottom;
+			positions.value[k].bottom = positions.value[k].bottom - dValue;
+		}
+	}
+	return;
 	nodes?.forEach(node => {
 		let rect = node.getBoundingClientRect();
 		let height = rect.height;
-		console.log(node.id);
+		console.log(node);
 		let index = +node.id.slice(1);
 		let oldHeight = positions.value[index].height;
 		let dValue = oldHeight - height;

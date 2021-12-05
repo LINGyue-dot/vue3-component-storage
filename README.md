@@ -126,9 +126,28 @@ const timerRenderAuto = () => {
 
 **每个 item 高度不固定**
 
-以预估高度暂时替换，同时对每个 item 记录下渲染之后的真实的 top height bottom 等
+以预估高度暂时替换，同时对每个 item 记录下渲染之后的真实的 top height bottom index 为 positions 数组
 
+核心仍然是利用 `slice` 对真实数组进行截取当前需要渲染的片段，后利用 `transform:translateY` 进行偏移
 
+* 初始化先利用预估高度对 positions 数组进行初始化
+
+* 计算 `startIndex` 与 `endIndex` 用如下方法
+
+  ```js
+  // 通过 scrollTop 寻找当前需要渲染列表的其实 index
+  const getStartIndex = (scrollTop = 0) => {
+  	// 找到第一个 bottom 大于 scrollTop 的 item
+  	let item = positions.value.find(i => i && i.bottom > scrollTop);
+  	return item?.index || 0;
+  };
+  ```
+
+  
+
+* 当滚动时候，计算 `startIndex` `endIndex` 以及偏移量
+
+* 在渲染列表之后即 `updated` 时候，获取到当前渲染的 item 的 DOM ，修改 position 的预估值 height 与 top 与 bottom ，如果 positions 中的 bottom 与真实的 bottom 有所偏差的话，那么就修改后面的所有 position 
 
 
 

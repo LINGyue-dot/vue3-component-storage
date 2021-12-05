@@ -10,7 +10,7 @@ import InfinteList from "@/components/list/InfinteList.vue";
 
 const data = ref<{ value: string; id: number }[]>([]);
 
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 120; i++) {
 	data.value.push({
 		value: faker.lorem.sentences(),
 		id: i,

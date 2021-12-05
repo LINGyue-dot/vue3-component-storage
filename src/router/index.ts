@@ -2,7 +2,7 @@
  * @Author: qianlong github:https://github.com/LINGyue-dot
  * @Date: 2021-12-03 15:19:58
  * @LastEditors: qianlong github:https://github.com/LINGyue-dot
- * @LastEditTime: 2021-12-04 21:35:32
+ * @LastEditTime: 2021-12-05 16:33:33
  * @Description:
  */
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
@@ -10,7 +10,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/form",
+    redirect: "/list",
   },
   {
     path: "/form",

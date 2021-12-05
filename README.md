@@ -109,12 +109,18 @@ const timerRenderAuto = () => {
 
 ```html
 	<div class="infinite-list-container" @scroll="">
-		<div class="infinite-list-phantom"></div> // 为全列表高度，用于撑起滚动条
-		<div class="infinite-list"></div>
+		<div class="infinite-list-phantom"></div> // 为全列表高度，用于撑起滚动条 设置 absoult 与 z-index = -1
+		<div class="infinite-list"></div> // 设置 absolute 在 infinite-list-phantom 之上
 	</div>
 ```
 
 * 每个 item 高度固定
+
+  监听滚动事件，设置高度为显示区域的高度以及距离上方的高度。利用 `slice` 对数据进行切片，获取此位置需要渲染的索引，后利用 `transform:translateY()` 对已渲染的列表进行偏移到可视区域即可。
+
+  此时 `start= Math.floor(scrollTop/itemSize)` `end=start+visibleCount`
+
+* 
 
 
 

@@ -120,7 +120,13 @@ const timerRenderAuto = () => {
 
   此时 `start= Math.floor(scrollTop/itemSize)` `end=start+visibleCount`
 
-* 
+
+
+
+
+**每个 item 高度不固定**
+
+以预估高度暂时替换，同时对每个 item 记录下渲染之后的真实的 top height bottom 等
 
 
 

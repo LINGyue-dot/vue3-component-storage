@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@types/faker': ^5.5.9
   '@typescript-eslint/eslint-plugin': ^4.18.0
   '@typescript-eslint/parser': ^4.18.0
   '@vue/cli-plugin-babel': ~4.5.0
@@ -15,6 +16,7 @@ specifiers:
   core-js: ^3.6.5
   eslint: ^6.7.2
   eslint-plugin-vue: ^7.0.0
+  faker: ^5.5.3
   mitt: ^3.0.0
   typescript: ~4.1.5
   vue: ^3.0.0
@@ -24,12 +26,14 @@ specifiers:
 dependencies:
   bootstrap: 5.1.3
   core-js: registry.npmmirror.com/core-js/3.19.2
+  faker: 5.5.3
   mitt: 3.0.0
   vue: registry.npmmirror.com/vue/3.2.23
   vue-router: registry.npmmirror.com/vue-router/4.0.12_vue@3.2.23
   vuex: registry.nlark.com/vuex/4.0.2_vue@3.2.23
 
 devDependencies:
+  '@types/faker': 5.5.9
   '@typescript-eslint/eslint-plugin': registry.npmmirror.com/@typescript-eslint/eslint-plugin/4.33.0_e66a0234d36070dcc49614ed7c477ee7
   '@typescript-eslint/parser': registry.npmmirror.com/@typescript-eslint/parser/4.33.0_eslint@6.8.0+typescript@4.1.6
   '@vue/cli-plugin-babel': registry.npmmirror.com/@vue/cli-plugin-babel/4.5.15_637b329c4ca5f84e91800cc1f21ee875
@@ -65,6 +69,10 @@ packages:
       '@babel/helper-validator-identifier': 7.15.7
       chalk: 2.4.2
       js-tokens: 4.0.0
+    dev: true
+
+  /@types/faker/5.5.9:
+    resolution: {integrity: sha512-uCx6mP3UY5SIO14XlspxsGjgaemrxpssJI0Ol+GfhxtcKpv9pgRZYsS4eeKeHVLje6Qtc8lGszuBI461+gVZBA==}
     dev: true
 
   /@types/json-schema/7.0.9:
@@ -308,6 +316,10 @@ packages:
     resolution: {integrity: sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=}
     engines: {node: '>=0.8.0'}
     dev: true
+
+  /faker/5.5.3:
+    resolution: {integrity: sha512-wLTv2a28wjUyWkbnX7u/ABZBkUkIF2fCd73V6P2oFqEGEktDfzWx4UxrSqtPRw0xPRAcjeAOIiJWqZm3pP4u3g==}
+    dev: false
 
   /fast-deep-equal/3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
